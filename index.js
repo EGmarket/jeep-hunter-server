@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const admin = require("firebase-admin")
+const admin = require("firebase-admin");
 const { MongoClient } = require('mongodb');
+const ObjectId = require('mongodb').ObjectId;
 require('dotenv').config()
 const port = process.env.PORT || 5000;
 
@@ -77,21 +78,9 @@ async function run() {
         res.json(order);
       });
 
-      app.get('/appointments', async(req, res) =>{
-        const email = req.query.email;
-        const query = {email : email}
-        const cursor = appointmentsCollection.find(query);
-        const appointments = await cursor.toArray();
-        res.json(appointments);
-      })
+    
      
-      app.post('/appoinments', async(req, res) =>{
-       const appointment = req.body;
-       const result = await appointmentsCollection.insertOne(appointment)
-       console.log(appointment);
-       res.json(result);
-
-      });
+      
 
       app.get('/users/:email', async (req, res) => {
         const email = req.params.email;
@@ -121,6 +110,14 @@ async function run() {
       const result = await usersCollection.updateOne(filter, updateDoc);
       res.json(result);
     })
+
+    app.delete("/deleteOrder/:id", async(req, res) => {
+      console.log(req.params.id);
+      const result = await ordersCollection.deleteOne({_id:ObjectId(req.params.id)})
+      console.log(result);
+      res.send(result);
+
+    }
 
 
 
