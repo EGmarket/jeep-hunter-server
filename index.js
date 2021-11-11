@@ -31,6 +31,7 @@ async function run() {
       const usersCollection = database.collection('users');
       const servicesCollection = database.collection('services');
       const ordersCollection = database.collection('orders');
+      const reviewCollection = database.collection('reviews');
       const headerCollection = database.collection('header');
       const footerCollection = database.collection('footer');
       
@@ -63,6 +64,18 @@ async function run() {
         const newService = req.body;
         const cursor = servicesCollection.insertOne(newService);
         res.json(cursor);
+      });
+
+      /* --------------Review */
+      app.post("/reviews", async (req, res) => {
+        const newReviews = req.body;
+        const cursor = reviewCollection.insertOne(newReviews);
+        res.json(cursor);
+      });
+      app.get("/reviews", async (req, res) => {
+        const cursor = reviewCollection.find({});
+        const review = await cursor.toArray();
+        res.json(review);
       });
 
       app.post('/orders', async (req, res) => {
