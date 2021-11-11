@@ -32,6 +32,7 @@ async function run() {
       const servicesCollection = database.collection('services');
       const ordersCollection = database.collection('orders');
       const reviewCollection = database.collection('reviews');
+      const infoCollection = database.collection('info');
       const headerCollection = database.collection('header');
       const footerCollection = database.collection('footer');
       
@@ -50,6 +51,13 @@ async function run() {
         const cursor = commonCollection.find({});
         const common = await cursor.toArray();
         res.json(common);
+      });
+
+      /* -----------------if */
+      app.get("/info", async (req, res) => {
+        const cursor = infoCollection.find({});
+        const info = await cursor.toArray();
+        res.json(info);
       });
 
       app.get('/orders', async (req, res) => {
