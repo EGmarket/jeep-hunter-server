@@ -35,6 +35,12 @@ async function run() {
         res.json(services);
       });
 
+      app.get("/common", async (req, res) => {
+        const cursor = commonCollection.find({});
+        const common = await cursor.toArray();
+        res.json(common);
+      });
+
       app.get('/appointments', async(req, res) =>{
         const email = req.query.email;
         const query = {email : email}
