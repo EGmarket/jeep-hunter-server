@@ -16,10 +16,24 @@ async function run() {
     try {
       await client.connect();
       console.log('Database connected successfully');
-      const database = client.db('doctors_portal');
-      const appointmentsCollection = database.collection('appointments');
+      const database = client.db('car_hunter');
+      const commonCollection = database.collection('common');
       const usersCollection = database.collection('users');
+      const servicesCollection = database.collection('services');
+      const ordersCollection = database.collection('orders');
+      const headerCollection = database.collection('header');
+      const footerCollection = database.collection('footer');
+      
 
+
+
+      // Get Api
+
+      app.get("/services", async (req, res) => {
+        const cursor = servicesCollection.find({});
+        const services = await cursor.toArray();
+        res.json(services);
+      });
 
       app.get('/appointments', async(req, res) =>{
         const email = req.query.email;
