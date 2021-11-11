@@ -58,6 +58,12 @@ async function run() {
       });
 
 
+      app.post("/services", async (req, res) => {
+        const newService = req.body;
+        const cursor = servicesCollection.insertOne(newService);
+        res.json(cursor);
+      });
+
       app.post('/orders', async (req, res) => {
         const orders = req.body;
         const cursor = ordersCollection.insertOne(orders)
